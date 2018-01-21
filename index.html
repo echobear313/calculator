@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title> 简单计算器 </title>  
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>   
+  <style type="text/css">
+  .main{
+  	width: 1280px;
+  	height: 880px;
+  	background-image: url(img/3.jpg);
+  }
+  .container{
+  	margin-left:360px;
+  	height: 440px;
+  	width:380px;
+  	border: 1px solid darkgray;
+  	background-color: aliceblue;
+  }
+  h1{
+  	font-family: courier;
+  	font-size: 30px;;
+  	text-align: center;
+  	color: darkgray;
+  }
+  span{
+  	color: darkgray;
+  	margin: 150px;
+  }
+  #screen{
+  	width:290px;
+	margin-left: 40px;
+	height: 40px;
+	background-color: bisque;
+	text-align: end;
+	font-size: 20px;
+	color: gray;
+  }
+	ul{
+		width:300px;
+		height: 240px;
+		border: 1px solid darkgray;
+		overflow: hidden;
+		margin-left: 30px;
+		padding-top: 20px;
+		padding-left: 20px;
+	}
+	li{
+		display: inline;
+		width: 45px;
+		height: 45px;
+		float: left;
+		list-style: none;
+		line-height: 40px;
+		margin:5px;
+		background-color: powderblue;
+		text-align: center;
+	}
+	#cc{
+		background-color: darksalmon;
+	}
+	#cc:hover{
+		background-color:lightslategray ;
+	}
+	#cc:active{
+		background-color: cornsilk;
+	}
+	#other{
+		background-color:darkseagreen
+	}
+	#other:hover{
+		background-color:lightslategray ;
+	}
+	#cc:active{
+		background-color: cornsilk;
+	}
+	#equal{
+		background-color: bisque;
+	}
+	#equal:hover{
+		background-color:lightslategray ;
+	}
+	li:hover{
+		background-color:lightslategray ;
+	}
+	li:active{
+		background-color: cornsilk;
+	}
+  </style>
+</head>
+<script type="text/javascript">
+	var num = 0;
+	var result = 0;
+	var show = "0";
+	var same = 0;
+	var state = 0;
+	var cal = 0;
+	function tiqu(num){
+	var str = document.getElementById("screen");
+	var s=String(str.value);    //获得当前显示数据
+    s=(s!="0") ? ((state==0) ? s : "") : "";        //如果当前值不是"0"，且状态为0，则返回当前值，否则返回空值;
+    s=s + String(num);                   //给当前值追加字符
+    document.container.ininin.value=s; //刷新显示
+    state=0;   //重置输入状态
+    same=0; 
+	//重置防止重复按键的标志
+   }
+	function devide(){
+		calculate();
+		state = 1;
+		cal = 4;
+	}
+	function multiply(){
+		calculate();
+		state = 1;
+		cal = 3;
+	}
+	function plus(){
+		calculate();
+		state = 1;
+		cal = 1;
+	}
+	function minus(){
+		calculate();
+		state = 1;
+		cal = 2;
+	}
+	function yu(){
+		calculate();
+		state = 1;
+		cal = 5;
+	}
+	function alldel(){
+		num = 0;
+		result = 0;
+		show = "0";
+		document.container.ininin.value = 0;
+	}
+	function del(){
+		var str = document.getElementById("screen");
+		var s = String(str.value);
+		if(s == "0"){
+			s = "";
+		}
+		s = s.substr(0, s.length-1);
+		if(s == ""){
+			s = "0";
+		}
+        document.container.ininin.value=s;
+	}
+	function zero(){
+		var s = document.container.ininin.value;
+		if(s != "0"){
+			s = s + "0";
+		}
+		document.container.ininin.value = s;
+	}
+	function doublezero(){
+		var s = document.container.ininin.value;
+		if(s != "0"){
+			s = s + "00";
+		}
+		document.container.ininin.value = s;
+	}
+	function dot(){
+		var s = document.container.ininin.value;
+		var len = s.length - 1;
+		var flag = 0;
+		for(var i = 0; i < len-1; i++){
+			if(substr(s, i, 1) == "."){
+				flag = 1;
+			}
+		}
+		if(!flag){
+			s = s + ".";
+		}
+		document.container.ininin.value = s;
+	}
+	function equal(){
+		calculate();
+		state = 1;
+		result = 0;
+		show = "0";
+		num = 0;
+	}
+	function calculate(){
+		var show = Number(document.container.ininin.value);
+		if(num && !same){
+			if(cal == 1){
+				result = num + show;
+		    }
+			else if(cal == 2){
+				result = num - show;
+			}
+			else if(cal == 3){
+				result = num * show;
+			}
+			else if(cal == 4){
+				if(show == 0){
+					alert("被除数不能为0!");
+				}
+				else{
+					result = num / show;
+				}
+			}
+			else if(cal == 5){
+				result = num % show;
+			}
+			same = 1;
+		}
+		else{
+			result = show;
+		}
+		show = String(result);
+		document.container.ininin.value = show;
+		num = result;
+	}
+</script>
+<body>
+	<div class="main">
+ 	<div class="container">
+ 		<h1>simple calculator</h1>
+ 		<form name="container" action="" method="get">
+				<input type="text " name = "ininin" id="screen"value="0"onfocus="this.blur();" />
+			<div id="button">
+ 			<ul>
+ 				<li onclick="tiqu(7)">7</li>
+ 				<li onclick="tiqu(8)">8</li>
+ 				<li onclick="tiqu(9)">9</li>
+ 				<li id = "cc" onclick="devide()">/</li>
+ 				<li id = "cc" onclick="multiply()">*</li>
+ 				<li onclick="tiqu(4)">4</li>
+ 				<li onclick="tiqu(5)">5</li>
+ 				<li onclick="tiqu(6)">6</li>
+ 				<li id = "cc" onclick="plus()">+</li>
+ 				<li id = "cc" onclick="minus()">-</li>
+ 				<li onclick="tiqu(1)">1</li>
+ 				<li onclick="tiqu(2)">2</li>
+ 				<li onclick="tiqu(3)">3</li>
+ 				<li id = "other" onclick="alldel()">C</li>
+ 				<li id = "other" onclick="del()">Del</li>
+ 				<li onclick="zero()">0</li>
+ 				<li onclick="doublezero()">00</li>
+ 				<li id = "cc" onclick="dot()">.</li>
+ 				<li onclick="yu()">%</li>
+ 				<li id = "cc" onclick="equal()">=</li>
+ 				
+ 		   </ul>			
+ 		   <span>by 🐻</span>
+			</div>
+			</form>
+ 	</div>
+ </div>
+ </body>
+</html>
+
+
+
+
